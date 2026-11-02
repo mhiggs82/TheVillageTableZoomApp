@@ -7,7 +7,7 @@ The Village Table is a Zoom App. It opens as a panel inside your community call.
 - A Zoom account for the host with breakout rooms turned on (Zoom web portal, Settings, In Meeting (Advanced), Breakout room).
 - A Zoom Marketplace developer account.
 - A small server that stays on and has HTTPS. Do not use serverless hosting (for example plain Vercel functions). The app keeps each meeting's codes in memory only, and serverless functions forget everything between requests. Render, Railway, Fly.io, a DigitalOcean droplet or a Hostinger VPS all work. Node 18 or newer.
-- The secret code key. It must be exactly the same in the intake form page and on this server.
+- The secret code key. Only this server holds it. The intake form is served by this same app at `/code`.
 
 ## 1. Run the server
 
@@ -22,9 +22,9 @@ Environment variables:
 | Name | What it is |
 |---|---|
 | `ZOOM_APP_CLIENT_ID`, `ZOOM_APP_CLIENT_SECRET` | From the Marketplace app's credentials page. |
-| `CODE_KEY` | Your secret code key (8 or more plain ASCII characters). Same value as `CODE_KEY` near the top of the intake form page. |
+| `CODE_KEY` | Your secret code key (8 or more plain ASCII characters). It lives only in this server's environment. The intake form at `/code` sends answers here to be turned into a code, so the key never reaches a browser. |
 | `ZOOM_APP_REDIRECT_URI` | The OAuth redirect URL you register in the Marketplace. Authorization happens inside Zoom, so the URL is registered but never visited. |
-| `FORM_URL` | Link to your intake form. Shown to parents who have no code. |
+| `FORM_URL` | Link to your intake form. Set it to `https://YOUR-DOMAIN/code`. Shown to parents who have no code. |
 | `ALLOW_CLIENT_ROLE` | Leave at `0`. See "First live test". |
 
 ## 2. Create the app in the Zoom Marketplace
@@ -65,7 +65,7 @@ These are the likely surprises. Each one is quick to check in the first live tes
 
 ## 5. Adding cities later
 
-Cities are stored as a numbered list in `server/model.js` (and the same list in the intake form page). The list holds up to 32 places in the current code format.
+Cities are stored as a numbered list in `server/model.js`, and as the options in `server/intake/intake.html`. The list holds up to 32 places in the current code format.
 
 - Add new cities at the end of the list, never in the middle. Moving an existing city breaks every code already handed out.
 - Past 32 places, the code needs one more character. That is a new code version. Ask me to extend it and old codes will keep working.

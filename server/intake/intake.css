@@ -1,0 +1,280 @@
+@font-face{font-family:"Playfair Display";src:url(/fonts/playfair-display-latin.woff2) format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Playfair Display";src:url(/fonts/playfair-display-italic-latin.woff2) format("woff2");font-weight:400 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Work Sans";src:url(/fonts/work-sans-latin.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+/* ParentWise design tokens (inlined) */
+:root{
+/* ---- Brand (given) ---- */
+--purple-500:#6B4CA3;
+--cream-50:#F5F1E8;
+--black-900:#1A1A1A;
+
+/* ---- Purple scale (derived, oklch-harmonized around brand purple) ---- */
+--purple-50:oklch(96% 0.02 296);
+--purple-100:oklch(91% 0.045 296);
+--purple-200:oklch(82% 0.08 296);
+--purple-300:oklch(71% 0.115 296);
+--purple-400:oklch(58% 0.135 296);
+--purple-600:oklch(38% 0.115 296);
+--purple-700:oklch(30% 0.095 296);
+--purple-800:oklch(23% 0.075 296);
+--purple-900:oklch(17% 0.055 296);
+
+/* ---- Named warm neutrals (from GetParentWise Master) ---- */
+--cream-100:#FBF9F4;   /* Lifted Cream - nested/raised editorial surface */
+--warm-white:#FFFFFF;  /* Warm White - inputs, overlays, dialogs */
+--taupe-200:#D8D1C4;   /* Warm Taupe - subtle borders, quiet rules */
+--taupe-600:#756F66;   /* Muted Taupe - secondary text, metadata */
+--lavender-100:#E8E0F2;/* Soft Lavender - low-intensity tinted surface */
+
+/* ---- Warm neutral scale (cream <-> deep black, shares the purple's warm undertone) ---- */
+--neutral-0:var(--warm-white);
+--neutral-50:#F5F1E8;
+--neutral-100:oklch(93% 0.015 80);
+--neutral-200:var(--taupe-200);
+--neutral-300:oklch(76% 0.025 70);
+--neutral-400:oklch(63% 0.025 65);
+--neutral-500:var(--taupe-600);
+--neutral-600:oklch(40% 0.015 55);
+--neutral-700:oklch(30% 0.012 50);
+--neutral-800:oklch(20% 0.008 45);
+--neutral-900:#1A1A1A;
+
+/* ---- Semantic hues (harmonized to purple's chroma/lightness curve) ---- */
+--green-500:oklch(52% 0.1 155);
+--green-100:oklch(93% 0.035 155);
+--amber-500:oklch(62% 0.12 75);
+--amber-100:oklch(93% 0.045 75);
+--red-500:oklch(52% 0.13 25);
+--red-100:oklch(93% 0.04 25);
+--blue-500:oklch(52% 0.09 250);
+--blue-100:oklch(93% 0.03 250);
+
+/* ---- Semantic aliases ---- */
+--surface-page:var(--cream-50);
+--surface-raised:var(--cream-100);
+--surface-overlay:var(--warm-white);
+--surface-tinted:var(--lavender-100);
+--surface-card:var(--neutral-0);
+--surface-sunken:var(--neutral-100);
+--surface-inverse:var(--black-900);
+--surface-brand:var(--purple-500);
+--surface-brand-subtle:var(--purple-50);
+
+--text-primary:var(--black-900);
+--text-secondary:var(--neutral-600);
+--text-muted:var(--taupe-600);
+--text-tertiary:var(--neutral-400);
+--text-on-brand:var(--cream-50);
+--text-on-inverse:var(--cream-50);
+--text-brand:var(--purple-500);
+--text-link:var(--purple-500);
+--text-link-hover:var(--purple-600);
+
+--border-subtle:var(--neutral-200);
+--border-default:var(--neutral-300);
+--border-strong:var(--neutral-500);
+--border-brand:var(--purple-500);
+--border-focus:var(--purple-400);
+
+--accent:var(--purple-500);
+--accent-hover:var(--purple-600);
+--accent-active:var(--purple-700);
+--accent-subtle:var(--purple-50);
+--accent-subtle-hover:var(--purple-100);
+
+--status-success:var(--green-500);
+--status-success-bg:var(--green-100);
+--status-warning:var(--amber-500);
+--status-warning-bg:var(--amber-100);
+--status-danger:var(--red-500);
+--status-danger-bg:var(--red-100);
+--status-info:var(--blue-500);
+--status-info-bg:var(--blue-100);
+
+--focus-ring:var(--purple-400);
+}
+:root{
+--font-display:"Playfair Display",Georgia,"Times New Roman",serif;
+--font-body:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+/* type scale - editorial, spacious */
+--font-size-display-xl:clamp(2.5rem,5.2vw,4rem);   /* 40 → 64px hero */
+--font-size-display-lg:clamp(1.875rem,3.4vw,2.25rem);/* 30 → 36px section */
+--font-size-display-md:clamp(1.5rem,2.4vw,1.75rem); /* 24 → 28px */
+--font-size-display-sm:1.75rem;
+--font-size-heading-lg:1.5rem;
+--font-size-heading-md:1.25rem;
+--font-size-heading-sm:1.0625rem;
+--font-size-body-lg:1.125rem;
+--font-size-body-md:1rem;
+--font-size-body-sm:0.875rem;
+--font-size-caption:0.75rem;
+
+--leading-flat:1;
+--leading-tight:1.1;
+--leading-snug:1.3;
+--leading-normal:1.55;
+--leading-relaxed:1.7;
+
+--tracking-tighter:-0.02em;
+--tracking-tight:-0.01em;
+--tracking-normal:0;
+--tracking-wide:0.04em;
+--tracking-wider:0.08em;
+
+--weight-regular:400;
+--weight-medium:500;
+--weight-semibold:600;
+--weight-bold:700;
+--weight-black:900;
+}
+:root{
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-5:20px;
+--space-6:24px;
+--space-8:32px;
+--space-10:40px;
+--space-12:48px;
+--space-16:64px;
+--space-20:80px;
+--space-24:96px;
+--space-32:128px;
+
+/* layout rhythm */
+--content-max-width:1200px;
+--content-max-width-narrow:720px;
+--section-padding-y:var(--space-24);
+--section-padding-y-sm:var(--space-12);
+--section-padding-y-lg:var(--space-32);
+
+/* horizontal gutters */
+--gutter-mobile:var(--space-6);
+--gutter-desktop:var(--space-12);
+--gutter-wide:100px;
+
+/* breakpoints (reference values - use the literals in @media) */
+--bp-tablet:768px;
+--bp-desktop:1024px;
+--bp-wide:1440px;
+}
+:root{
+--radius-sm:4px;    /* badges, tiny details */
+--radius-md:8px;    /* inputs, small controls */
+--radius-lg:14px;   /* standard cards */
+--radius-xl:20px;   /* primary + secondary CTA buttons */
+--radius-2xl:32px;  /* large editorial containers */
+--radius-3xl:40px;  /* hero media frames, major media */
+--radius-full:999px;/* true pills: tags, selectors, floating nav */
+}
+:root{
+/* soft, warm-tinted, low-elevation - minimalist, no harsh drop shadows */
+--shadow-sm:0 1px 2px oklch(20% 0.01 60 / 0.06);
+--shadow-md:0 4px 16px oklch(20% 0.01 60 / 0.08),0 1px 3px oklch(20% 0.01 60 / 0.06);
+--shadow-lg:0 12px 32px oklch(20% 0.01 60 / 0.10),0 2px 6px oklch(20% 0.01 60 / 0.06);
+--shadow-focus:0 0 0 3px oklch(58% 0.135 296 / 0.35);
+--shadow-inset:inset 0 1px 2px oklch(20% 0.01 60 / 0.06);
+
+/* ---- Atmospheric elevation (from GetParentWise Master) ----
+   Wide, very soft separation for page chrome. Level 0 = no shadow (default). */
+--elevation-1:0 4px 24px rgba(26,26,26,0.04);  /* floating nav, subtle raised */
+--elevation-2:0 24px 48px rgba(26,26,26,0.08); /* dialogs, elevated cards */
+--elevation-3:0 48px 96px rgba(26,26,26,0.18); /* rare feature/modal emphasis */
+}
+:root{
+--ease-standard:cubic-bezier(0.4,0,0.2,1); /* @kind other */
+--ease-out:cubic-bezier(0,0,0.2,1); /* @kind other */
+--ease-in:cubic-bezier(0.4,0,1,1); /* @kind other */
+--duration-fast:120ms; /* @kind other */
+--duration-base:200ms; /* @kind other */
+--duration-slow:360ms; /* @kind other */
+}
+:root{
+/* ---- Editorial density register ----
+   The compact counterpart to the spacious default. Used for one-pagers, decks,
+   print, dense dashboards - anywhere information must earn every millimetre.
+   Pair with the standard tokens; these override size/rhythm only. */
+
+/* micro type scale - below --font-size-caption */
+--font-size-micro:9px;      /* eyebrows, over-line labels */
+--font-size-label:10px;     /* section rules, pill labels */
+--font-size-fine:11.5px;    /* supporting/secondary copy */
+--font-size-dense:12.5px;   /* dense item titles */
+--font-size-dense-lg:14.5px;/* dense body copy */
+--font-size-stat:26px;      /* big numerals in a stat strip */
+
+/* label tracking - micro-caps only work when opened up */
+--tracking-label:0.16em;
+--tracking-label-loose:0.18em;
+--tracking-label-wider:0.22em;
+
+/* tight display tracking - sans headlines set large need negative tracking */
+--tracking-display-tight:-0.025em;
+--tracking-stat:-0.02em;
+
+--leading-dense:1.3;
+--leading-fine:1.45;
+
+/* hairlines carry all the structure in this register */
+--hairline:1px solid var(--border-subtle);
+--hairline-accent:1px solid var(--purple-200);
+--rule-accent:var(--purple-200);
+--accent-bar-height:5px;
+
+/* dense spacing steps - between the 4px grid, tuned for one-page fitting */
+--space-dense-1:3px;
+--space-dense-2:7px;
+--space-dense-3:9px;
+--space-dense-4:14px;
+--space-dense-5:20px;
+--space-dense-6:26px;
+
+--radius-badge:6px;
+--dot-size:4px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface-page);color:var(--text-primary);font-family:var(--font-body);font-size:var(--font-size-body-md);line-height:var(--leading-normal);text-wrap:pretty}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;line-height:var(--leading-tight);letter-spacing:var(--tracking-tight);font-weight:var(--weight-semibold)}
+p{margin:0}
+a{color:var(--text-link);text-decoration:none}
+a:hover{color:var(--text-link-hover);text-decoration:underline}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+
+/* Layout idea: one narrow column on cream, hairline-bordered form, a single purple action */
+html{color-scheme:light}
+body{min-height:100%}
+.wrap{max-width:560px;margin:0 auto;padding:var(--space-8) var(--gutter-mobile) var(--space-16)}
+.logo{display:block;height:44px;width:auto;margin-bottom:var(--space-12)}
+h1{font-size:var(--font-size-display-md);margin-bottom:var(--space-4);text-wrap:balance}
+.lede{font-size:var(--font-size-body-lg);color:var(--text-secondary);margin-bottom:var(--space-3,12px)}
+.fine{font-size:var(--font-size-body-sm);color:var(--text-secondary);margin-bottom:var(--space-8)}
+form{display:flex;flex-direction:column;gap:var(--space-8)}
+.field{display:flex;flex-direction:column;gap:8px;border:0;padding:0;margin:0}
+.field legend,.field>label{font-weight:var(--weight-semibold);font-size:var(--font-size-body-md);padding:0;margin-bottom:2px}
+.hint{font-size:var(--font-size-body-sm);color:var(--text-secondary)}
+select{appearance:none;-webkit-appearance:none;width:100%;min-height:48px;padding:0 44px 0 14px;font:inherit;color:var(--text-primary);background-color:var(--surface-overlay);border:1px solid var(--border-default);border-radius:var(--radius-md);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 256 256'%3E%3Cpath fill='%231A1A1A' d='M213.66 101.66l-80 80a8 8 0 0 1-11.32 0l-80-80a8 8 0 0 1 11.32-11.32L128 164.69l74.34-74.35a8 8 0 0 1 11.32 11.32Z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select:hover{border-color:var(--border-strong)}
+select:focus-visible{outline:none;border-color:var(--border-focus);box-shadow:var(--shadow-focus)}
+.kids{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.kid{display:flex;flex-direction:column;gap:6px}
+.kid label{font-size:var(--font-size-body-sm);color:var(--text-secondary)}
+.btn{min-height:52px;padding:0 28px;font:inherit;font-weight:var(--weight-semibold);border-radius:var(--radius-xl);cursor:pointer;transition:background-color var(--duration-base) var(--ease-standard),border-color var(--duration-base) var(--ease-standard)}
+.btn-primary{background:var(--accent);color:var(--text-on-brand);border:1px solid var(--accent)}
+.btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-primary:active{background:var(--accent-active);border-color:var(--accent-active)}
+.btn-quiet{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong)}
+.btn-quiet:hover{background:var(--surface-sunken)}
+.btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.error{color:var(--status-danger);font-size:var(--font-size-body-sm);min-height:1.4em}
+.result{background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--space-8) var(--space-6)}
+.result[hidden],form[hidden]{display:none}
+.label-caps{font-size:var(--font-size-body-sm);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--text-secondary);font-weight:var(--weight-semibold)}
+.result .code{font-weight:var(--weight-semibold);font-size:clamp(2.75rem,14vw,4rem);letter-spacing:0.1em;font-variant-numeric:tabular-nums;color:var(--text-brand);margin:var(--space-4) 0 var(--space-6);user-select:all;word-break:keep-all}
+.result p{margin-bottom:var(--space-4);color:var(--text-primary)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin:var(--space-6) 0 var(--space-4)}
+.note{font-size:var(--font-size-body-sm);color:var(--text-secondary);margin:0}
+.copied{font-size:var(--font-size-body-sm);color:var(--text-secondary);min-height:1.4em;margin:0}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}

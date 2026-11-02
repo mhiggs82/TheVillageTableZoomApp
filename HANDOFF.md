@@ -20,7 +20,7 @@ You are taking over "The Village Table by GetParentWise", a Zoom App (Node 18+, 
 2. Create a Render free web service from it: build `npm install --omit=dev`, start `npm start`, health check `/healthz`, region Frankfurt. Tell me which environment variables to enter (see `.env.example`), and wait for me to enter them.
 3. Add the custom domain `villagetable.getparentwise.com` in Render. Give me the CNAME target. Add the matching CNAME record in Spaceship DNS if you have access; otherwise tell me the exact record.
 4. Confirm `https://villagetable.getparentwise.com/healthz` returns `{"ok":true}` and the security headers are present.
-5. Serve the intake form (`intake_form.html`, if I give it to you) at `/code` from the same app, with the `CODE_KEY` constant matched to the server's. Update `FORM_URL` guidance in SETUP.md. Add a test.
+5. DONE: the intake form is served at `/code` and codes are made on the server (`POST /api/encode`), so the key never reaches a browser. Update `FORM_URL` guidance in SETUP.md. Add a test.
 6. Walk me through creating the Zoom Marketplace app using the checklist in SETUP.md, then through the first live test.
 
 ## Stop and ask me before

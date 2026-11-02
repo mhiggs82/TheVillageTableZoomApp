@@ -18,8 +18,9 @@ server/matcher.js    closeness scoring and table building
 server/context.js    verifies who Zoom says is calling
 server/store.js      memory-only meeting store
 server/app.js        the web server and its rules
+server/intake/       the intake form served at /code (answers become a code on the server)
 public/              the panels parents and hosts see inside Zoom
-test/                61 automated tests
+test/                66 automated tests
 ```
 
 ## Tests

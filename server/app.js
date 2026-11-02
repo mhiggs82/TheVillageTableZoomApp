@@ -2,11 +2,11 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
-import { decodeCode } from './codec.js';
+import { decodeCode, encodeProfile } from './codec.js';
 import { decryptContext } from './context.js';
 import { makePlan } from './matcher.js';
 import { SessionStore } from './store.js';
-import { MODES, MIN_ROOM_SIZE, MAX_ROOM_SIZE, MAX_ROOMS } from './model.js';
+import { MODES, MIN_ROOM_SIZE, MAX_ROOM_SIZE, MAX_ROOMS, LOCATIONS, LIFE_STAGES, FAMILY } from './model.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
@@ -38,6 +38,7 @@ export function createApp(config) {
   if (!codeKey) throw new Error('CODE_KEY is required');
   const store = config.store || new SessionStore({ now });
   const codeAttempts = limiter(12, 5 * 60 * 1000, now);
+  const encodeAttempts = limiter(30, 5 * 60 * 1000, now);
   const pkce = new Map(); // state -> { verifier, exp }
   let loggedContextKeys = false;
 
@@ -68,6 +69,24 @@ export function createApp(config) {
   app.use(express.static(path.join(here, '..', 'public'), { index: 'index.html' }));
 
   app.get('/healthz', (req, res) => res.json({ ok: true }));
+
+  // ---- intake form: answers are turned into a code here, so the secret key never reaches a browser.
+  // Nothing about the answers is stored or logged.
+  const intakeDir = path.join(here, 'intake');
+  app.get('/code', (req, res) => res.sendFile(path.join(intakeDir, 'intake.html')));
+  app.get('/code/intake.css', (req, res) => res.sendFile(path.join(intakeDir, 'intake.css')));
+  app.get('/code/intake.js', (req, res) => res.sendFile(path.join(intakeDir, 'intake.js')));
+
+  const inRange = (v, n) => Number.isInteger(v) && v >= 0 && v < n;
+  app.post('/api/encode', (req, res) => {
+    if (!encodeAttempts(req.ip)) throw new HttpError(429, 'Too many tries. Please wait a few minutes.');
+    const { location, bands, life, family } = req.body || {};
+    const okBands = Array.isArray(bands) && bands.length >= 1 && bands.length <= 4 && bands.every((b) => Number.isInteger(b) && b >= 1 && b <= 4);
+    if (!inRange(location, LOCATIONS.length) || !okBands || !inRange(life, LIFE_STAGES.length) || !inRange(family, FAMILY.length)) {
+      throw new HttpError(400, 'Please answer every question so your code is accurate.');
+    }
+    res.json({ code: encodeProfile(codeKey, { location, bands, life, family }) });
+  });
   app.get('/api/config', (req, res) => res.json({ formUrl }));
 
   // ---- who is calling? (decrypted from Zoom's context, never trusted from the browser)
