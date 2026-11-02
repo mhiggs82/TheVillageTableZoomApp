@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Village Table by GetParentWise</title>
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/app.css">
+<script src="https://appssdk.zoom.us/sdk.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <header class="brand">
+    <p class="eyebrow">GetParentWise</p>
+    <h1>The Village Table</h1>
+  </header>
+
+  <section id="loading" class="view"><p class="muted">Opening your table...</p></section>
+
+  <section id="outside" class="view" hidden>
+    <p>The Village Table works inside a Zoom meeting. Open it from the Apps menu during your community call.</p>
+  </section>
+
+  <section id="signin" class="view" hidden>
+    <h2>Sign in to take a seat</h2>
+    <p>To be placed at a table, you need to join this call signed in to your Zoom account, on a computer. Guests and phones cannot be placed.</p>
+  </section>
+
+  <section id="allow" class="view" hidden>
+    <h2>One quick step</h2>
+    <p>Allow The Village Table to see your name in this meeting so the host can seat you. It does not read your video, audio, or chat.</p>
+    <button id="allow-btn" class="btn btn-primary" type="button">Allow The Village Table</button>
+    <p id="allow-error" class="error" role="alert"></p>
+  </section>
+
+  <!-- PARENT -->
+  <section id="parent" class="view" hidden>
+    <h2>Find your table</h2>
+    <p>Enter the 5-character code from your GetParentWise form. Your host will place you at a table when the rooms open.</p>
+    <form id="code-form" novalidate>
+      <label for="code" class="label">Your code</label>
+      <input id="code" class="code-input" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="7" placeholder="ABC-DE" aria-describedby="code-msg">
+      <p id="code-msg" class="error" role="alert"></p>
+      <button class="btn btn-primary" type="submit" id="code-save">Save my code</button>
+    </form>
+    <div id="code-done" hidden>
+      <p id="code-done-text" class="ok">You are on the list. Keep this open or close it. You will be moved to your table when the host opens the rooms.</p>
+      <button id="code-change" class="btn btn-quiet" type="button">Use a different code</button>
+      <p class="small">Your code is remembered on this device only, so you will not need to type it next time.</p>
+    </div>
+    <p id="form-link" class="small" hidden>No code yet? <a id="form-anchor" target="_blank" rel="noopener noreferrer">Make yours in two minutes.</a></p>
+  </section>
+
+  <!-- HOST -->
+  <section id="host" class="view" hidden>
+    <div class="tiles" aria-live="polite">
+      <div class="tile"><span class="num" id="n-present">0</span><span class="cap">parents here</span></div>
+      <div class="tile"><span class="num" id="n-ready">0</span><span class="cap">codes in</span></div>
+    </div>
+    <details id="waiting-box" class="waiting" hidden>
+      <summary><span id="n-waiting">0</span> still need a code</summary>
+      <ul id="waiting-list"></ul>
+    </details>
+
+    <fieldset class="group">
+      <legend>How should tables form?</legend>
+      <label class="choice"><input type="radio" name="mode" value="smart" checked><span><b>Smart match</b><small>Closest overall: city, child's age, season of life, family.</small></span></label>
+      <label class="choice"><input type="radio" name="mode" value="random"><span><b>Random shuffle</b><small>Everyone mixed fairly.</small></span></label>
+      <label class="choice"><input type="radio" name="mode" value="country"><span><b>By country</b></span></label>
+      <label class="choice"><input type="radio" name="mode" value="city"><span><b>By city</b></span></label>
+      <label class="choice"><input type="radio" name="mode" value="age"><span><b>By child's age</b></span></label>
+      <label class="choice"><input type="radio" name="mode" value="life"><span><b>By season of life</b></span></label>
+      <label class="choice"><input type="radio" name="mode" value="family"><span><b>By family description</b></span></label>
+      <p class="small">In a "by" choice, everyone at a table shares that trait. You never see what anyone's code says.</p>
+    </fieldset>
+
+    <div class="row">
+      <div class="field">
+        <label for="size" class="label">People per table</label>
+        <div class="stepper">
+          <button type="button" id="size-minus" class="btn btn-quiet" aria-label="Fewer people per table">-</button>
+          <input id="size" type="number" min="2" max="10" value="3" inputmode="numeric">
+          <button type="button" id="size-plus" class="btn btn-quiet" aria-label="More people per table">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="minutes" class="label">Close tables after</label>
+        <select id="minutes">
+          <option value="0">I will close them</option>
+          <option value="10">10 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="20" selected>20 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">60 minutes</option>
+        </select>
+      </div>
+    </div>
+
+    <p id="host-error" class="error" role="alert"></p>
+    <div class="actions">
+      <button id="preview" class="btn btn-quiet" type="button">Preview tables</button>
+      <button id="reshuffle" class="btn btn-quiet" type="button" hidden>Shuffle again</button>
+    </div>
+    <div id="preview-box" class="preview" hidden>
+      <p id="preview-text"></p>
+      <p id="preview-note" class="small"></p>
+      <button id="open" class="btn btn-primary" type="button">Open the tables</button>
+    </div>
+    <p id="result" class="ok" role="status" hidden></p>
+    <ul id="result-fails" class="fails"></ul>
+
+    <div class="footer-actions">
+      <button id="close-tables" class="btn btn-quiet" type="button">Close tables</button>
+      <button id="clear" class="btn btn-quiet" type="button">Clear all codes</button>
+    </div>
+  </section>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
